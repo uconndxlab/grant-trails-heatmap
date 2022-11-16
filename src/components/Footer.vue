@@ -10,7 +10,7 @@
                             <a class="footer-link" href="https://accessibility.uconn.edu/">Accessibility</a>
                         </v-col>
                         <v-col>
-                            <img width="26px" src="../assets/img/dx.png">
+                            <v-img width="26px" src="../assets/img/dx.png" />
                             Developed by the <a href="https://dxgroup.core.uconn.edu" class="px-1"> UConn Digital Experience Group</a> | <a href="https://core.uconn.edu" class="px-1">Center for Open Research Resources & Equipment </a>
                         </v-col>
                     </v-row>
@@ -21,8 +21,9 @@
 </template>
 
 <script>
+
 export default ({
-    name: "FooterVue"
+    name: "FooterVue",
 })
 
 </script>
