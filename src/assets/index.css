@@ -24,13 +24,9 @@
 
   #footer{
     display:none;
+    position: fixed;
+    bottom: 0;
   }
-
-  @media (min-width: 960px){
-
-    #footer {
-      display:flex;
-    }
 
     #mapView {
         position:absolute;
@@ -43,7 +39,6 @@
     .mapboxgl-canvas{
         margin-right:0px;
     }
-  }
 
   #mapView canvas {
     filter:grayscale(1);
