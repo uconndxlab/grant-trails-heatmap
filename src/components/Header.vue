@@ -76,7 +76,7 @@
       </nav>
       <nav class="navbar navbar-expand-lg navbar-light shift">
         <div class="">
-          <a class="navbar-brand" href="index.html">Connecticut's NSF Grants</a>
+          <a class="navbar-brand" href="index.html">Grant Trails Heatmap</a>
         </div>
       </nav>
 </template>
