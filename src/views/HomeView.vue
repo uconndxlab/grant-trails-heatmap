@@ -6,9 +6,8 @@
           <ExpansionPanelVue />
         </v-col>
         <v-col cols="12" md="9">
-          <div id="mapView">
             <!--This is where the mapbox map goes-->
-          </div>
+            <MapVue />
         </v-col>
       </v-row>
     </v-container>
@@ -18,11 +17,13 @@
 <script>
 // @ is an alias to /src
 import ExpansionPanelVue from '@/components/ExpansionPanel.vue';
+import MapVue from '@/components/Map.vue';
 
 export default {
   name: "HomeView",
   components: {
-    ExpansionPanelVue
+    ExpansionPanelVue,
+    MapVue
   }
 };
 </script>

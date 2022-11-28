@@ -34,9 +34,8 @@
   }
 
     #mapView {
-        position:absolute;
         top:0px;
-        width:75%;
+        width:100%;
         height:calc(100vh - 155px);
         margin-top: 0%;
       }
