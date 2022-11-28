@@ -23,9 +23,14 @@
   }
 
   #footer{
-    display:none;
+    width: 100%;
     position: fixed;
     bottom: 0;
+  }
+
+  #homeView{
+    width: 100%;
+    align-content: flex-start;
   }
 
     #mapView {

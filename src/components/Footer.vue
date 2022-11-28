@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-footer bottom fixed padless>
+        <v-footer>
             <v-card flat tile width="100%">
                 <v-card-text>
                     <v-row>
@@ -10,7 +10,7 @@
                             <a class="footer-link" href="https://accessibility.uconn.edu/">Accessibility</a>
                         </v-col>
                         <v-col>
-                            <v-img width="26px" src="../assets/img/dx.png" />
+                            <img style="vertical-align:middle" v-bind:src="require('../assets/img/dx.png')">
                             Developed by the <a href="https://dxgroup.core.uconn.edu" class="px-1"> UConn Digital Experience Group</a> | <a href="https://core.uconn.edu" class="px-1">Center for Open Research Resources & Equipment </a>
                         </v-col>
                     </v-row>

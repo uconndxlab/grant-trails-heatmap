@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div id="homeView" align-content="left">
     <v-container fluid>
       <v-row class="d-block d-md-flex">
         <v-col cols="12" md="3">

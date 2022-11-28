@@ -1,10 +1,10 @@
 <template>
   <v-app id="app">
     <header-vue />
-    <div class="container">
+    <div id="main">
       <router-view />
     </div>
-    <footer-vue />
+    <footer-vue id="footer"/>
   </v-app>
 </template>
 
