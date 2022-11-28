@@ -6,4 +6,5 @@ module.exports = defineConfig({
     plugins: [new Dotenv()],
   },
   transpileDependencies: true,
+  publicPath: "/grant-trails-redo/",
 });
