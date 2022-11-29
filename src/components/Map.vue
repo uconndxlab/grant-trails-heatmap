@@ -21,7 +21,6 @@ export default {
     methods: {
         async createMap() {
             try {
-                console.log(process.env.VUE_APP_MAPBOX_ACCESS_TOKEN)
                 mapboxgl.accessToken = this.accessToken;
 
                 this.map = new mapboxgl.Map({
