@@ -6,6 +6,7 @@ module.exports = defineConfig({
     plugins: [new Dotenv()],
   },
   transpileDependencies: true,
-  publicPath:
-    process.env.NODE_ENV === "production" ? "/grant-trails-redo/" : "/",
+  publicPath: "/grant-trails-redo/",
+  // publicPath:
+  //   process.env.NODE_ENV === "production" ? "/grant-trails-redo/" : "/",
 });
