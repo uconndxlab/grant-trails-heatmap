@@ -6,7 +6,7 @@
 
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-// import supabase from "../supabase"
+//import supabase from "../supabase"
 
 export default {
     name: "MapVue",
@@ -31,27 +31,37 @@ export default {
                     zoom: 8.5
                 });
 
-                let geocoder = new MapboxGeocoder({
+                /*
+                // for each new zipcode in "purchases" we want to geocode it and add a marker to map
+                
+                let { data: purchases, error } = await supabase
+                    .from("purchases")
+                    .select("Zip Code") //look at zip codes
+                    .not("Zip Code", "is", null); // no null values
+                */
+                
+                
+                new MapboxGeocoder({
                     accessToken: this.accessToken,
                     mapboxgl: mapboxgl,
+                    types: "postcode",
                     marker: false
                 });
+                
+                const zip_target = "06071";
 
-                this.map.addControl(geocoder); // temporary - we want to fetch from Supabase
+                const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${zip_target}.json?access_token=${this.accessToken}`;
+                const response = await fetch(endpoint);
+                const results = await response.json()
 
-                geocoder.on("result", (e) => {
-                    // const marker = new mapboxgl.Marker({
-                    //     draggable: false,
-                    //     color: "#0a009c" // change color to fit nsf grants
-                    // })
-                    // .setLngLat(e.result.center)
-                    // .addTo(this.map);
+                this.marker = new mapboxgl.Marker({
+                    draggable: false,
+                    color: "#0a009c"
+                })
+                .setLngLat(results["features"][0]["center"])
+                .addTo(this.map);
 
-                    this.center = e.result.center;
-
-                });
-
-            } 
+            }
             catch (err) {
                 console.log("map error", err);
             }
