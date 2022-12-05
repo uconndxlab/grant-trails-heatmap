@@ -10,7 +10,7 @@ jobs:
     environment: Development
     steps:
       - uses: actions/checkout@v2
-      - run: yarn install && yarn build
+      - run: npm ci && npm run build
         env:
           VUE_APP_SUPABASE_URL: ${{ secrets.VUE_APP_SUPABASE_URL }}
           VUE_APP_SUPABASE_KEY: ${{ secrets.VUE_APP_SUPABASE_KEY }}
