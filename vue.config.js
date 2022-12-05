@@ -6,4 +6,9 @@ module.exports = defineConfig({
     plugins: [new Dotenv()],
   },
   transpileDependencies: true,
+  babel: {
+    loaderOptions: {
+      ignore: ["./node_mobdules/mapbox-gl/dist/mapbox-gl.js"],
+    },
+  },
 });
