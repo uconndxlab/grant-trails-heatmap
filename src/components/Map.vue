@@ -8,6 +8,8 @@ import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 // import supabase from "../supabase"
 
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default
+
 export default {
     name: "MapVue",
     data() {
