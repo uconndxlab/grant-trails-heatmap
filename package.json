@@ -55,5 +55,14 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
+  ],
+  "production": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all",
+    "not ie 11",
+    "not chrome < 51",
+    "not safari < 10",
+    "not android < 51"
   ]
 }
