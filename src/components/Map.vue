@@ -6,9 +6,6 @@
 
 import supabase from "@/supabase";
 import mapboxgl from "mapbox-gl";
-import { ref } from "vue";
-//import { supabase } from "../supabase"
-
 
 export default {
     name: "MapVue",
@@ -32,30 +29,15 @@ export default {
                     zoom: 8.5
                 });
                 
-                // for each new zipcode in "purchases" we want to geocode it and add a marker to map
+                const {count, error} = await supabase
+                    .from("purchases")
+                    .select("Zip", {count: "exact", head: "true"});
                 
-                const data = ref([]);
-                const dataLoaded = ref(null);
-
-                const getData = async() => {
-                    try {
-                        const { data: purchases, error } = await supabase.from("purchases").select("Zip Codes");
-                        if (error) throw error;
-                        data.value = purchases;
-                        dataLoaded.value = true;
-                        console.log(data.value);
-                    } catch (error) {
-                        console.warn(error.message)
-                    }
-                };
-
-                getData();
-                for (let i = 0; i < data.length; i++) this.addMarker(data[i]);
-                
-
-                //let zips = ["06269", "06071", "01741"];
-                //for (let i = 0; i < zips.length; i++) this.addMarker(zips[i]);
-
+                if (error) throw error;
+                console.log(count);
+                // the line below will crash the site -- too many records
+                //for (let i = 0; i < count / 1000; i++) this.loadPageToMap(i);
+                this.loadPageToMap();
             }
             catch (err) {
                 console.log("map error", err);
@@ -63,8 +45,36 @@ export default {
 
             
         },
+        async loadPageToMap(page = 1) {
+            // pagination func
+            const getPagination = (page, size) => {
+                const limit = size ? +size : 3;
+                const from = page ? page * limit : 0;
+                const to = page ? from + size : size;
+
+                return { from, to };
+            };
+
+            // for each new zipcode in "purchases" we want to geocode it and add a marker to map
+            const { from, to } = getPagination(page, 1000);
+            const { data, error } = await supabase
+                .from("purchases")
+                .select("*", {count: "exact"})
+                .order("id", {ascending: true})
+                .range(from, to);
+            
+            if (error) throw error;
+            console.log(data);
+
+            for (let item in data) {
+                this.addMarker(item);
+            }
+        },
         async addMarker(zip_target) {
-                const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${zip_target}.json?access_token=${this.accessToken}`;
+                if (zip_target === "") return; // for when we have no zipcode
+
+                //only looking for places in the US
+                const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${zip_target}.json?country=US&access_token=${this.accessToken}`;
                 const response = await fetch(endpoint);
                 const results = await response.json()
 
