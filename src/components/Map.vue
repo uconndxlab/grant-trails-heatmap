@@ -37,13 +37,12 @@ export default {
                 console.log(count);
                 // the line below will crash the site -- too many records
                 //for (let i = 0; i < count / 1000; i++) this.loadPageToMap(i);
-                this.loadPageToMap();
+                this.loadPageToMap(2);
             }
             catch (err) {
                 console.log("map error", err);
             }
 
-            
         },
         async loadPageToMap(page = 1) {
             // pagination func
@@ -56,6 +55,7 @@ export default {
             };
 
             // for each new zipcode in "purchases" we want to geocode it and add a marker to map
+            // we want to paginate this to not overwhelm the site
             const { from, to } = getPagination(page, 1000);
             const { data, error } = await supabase
                 .from("purchases")
@@ -83,6 +83,13 @@ export default {
                     color: "#0a009c" // change to whatever color we want later
                 })
                 .setLngLat(results["features"][0]["center"])
+                // adding popups - can tweak later
+                .setPopup(
+                    new mapboxgl.Popup({ offset: 25 })
+                        .setHTML(
+                            `<h3>${results["features"]["place_name"]}</h3>`
+                        )
+                )
                 .addTo(this.map);
         }
     }
