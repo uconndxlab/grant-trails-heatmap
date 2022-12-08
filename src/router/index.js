@@ -8,7 +8,6 @@ const routes = [
     component: HomeView,
   },
 ];
-
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
