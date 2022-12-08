@@ -4,9 +4,8 @@
 
 <script>
 
+import supabase from "@/supabase";
 import mapboxgl from "mapbox-gl";
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-// import supabase from "../supabase"
 
 export default {
     name: "MapVue",
@@ -29,31 +28,69 @@ export default {
                     center: [-72.7, 41.45],
                     zoom: 8.5
                 });
-
-                let geocoder = new MapboxGeocoder({
-                    accessToken: this.accessToken,
-                    mapboxgl: mapboxgl,
-                    marker: false
-                });
-
-                this.map.addControl(geocoder); // temporary - we want to fetch from Supabase
-
-                geocoder.on("result", (e) => {
-                    // const marker = new mapboxgl.Marker({
-                    //     draggable: false,
-                    //     color: "#0a009c" // change color to fit nsf grants
-                    // })
-                    // .setLngLat(e.result.center)
-                    // .addTo(this.map);
-
-                    this.center = e.result.center;
-
-                });
-
-            } 
+                
+                const {count, error} = await supabase
+                    .from("purchases")
+                    .select("Zip", {count: "exact", head: "true"});
+                
+                if (error) throw error;
+                console.log(count);
+                // the line below will crash the site -- too many records
+                //for (let i = 0; i < count / 1000; i++) this.loadPageToMap(i);
+                this.loadPageToMap(2);
+            }
             catch (err) {
                 console.log("map error", err);
             }
+
+        },
+        async loadPageToMap(page = 1) {
+            // pagination func
+            const getPagination = (page, size) => {
+                const limit = size ? +size : 3;
+                const from = page ? page * limit : 0;
+                const to = page ? from + size : size;
+
+                return { from, to };
+            };
+
+            // for each new zipcode in "purchases" we want to geocode it and add a marker to map
+            // we want to paginate this to not overwhelm the site
+            const { from, to } = getPagination(page, 1000);
+            const { data, error } = await supabase
+                .from("purchases")
+                .select("*", {count: "exact"})
+                .order("id", {ascending: true})
+                .range(from, to);
+            
+            if (error) throw error;
+            console.log(data);
+
+            for (let item in data) {
+                this.addMarker(item);
+            }
+        },
+        async addMarker(zip_target) {
+                if (zip_target === "") return; // for when we have no zipcode
+
+                //only looking for places in the US
+                const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${zip_target}.json?country=US&access_token=${this.accessToken}`;
+                const response = await fetch(endpoint);
+                const results = await response.json()
+
+                this.marker = new mapboxgl.Marker({
+                    draggable: false,
+                    color: "#0a009c" // change to whatever color we want later
+                })
+                .setLngLat(results["features"][0]["center"])
+                // adding popups - can tweak later
+                .setPopup(
+                    new mapboxgl.Popup({ offset: 25 })
+                        .setHTML(
+                            `<h3>${results["features"]["place_name"]}</h3>`
+                        )
+                )
+                .addTo(this.map);
         }
     }
 }
