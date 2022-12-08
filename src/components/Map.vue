@@ -29,15 +29,22 @@ export default {
                     zoom: 8.5
                 });
                 
-                const {count, error} = await supabase
-                    .from("purchases")
-                    .select("Zip", {count: "exact", head: "true"});
+                let { data: zipCodes, error } = await supabase
+                    .from('purchases')
+                    .select('Zip')
                 
                 if (error) throw error;
-                console.log(count);
                 // the line below will crash the site -- too many records
                 //for (let i = 0; i < count / 1000; i++) this.loadPageToMap(i);
-                this.loadPageToMap(2);
+                // this.loadPageToMap(2);
+                console.log(mapboxgl)
+                zipCodes.forEach((zipCode) => {
+                    mapboxgl.geocode(zipCode.Zip, {}, (err, data) => {
+                        new mapboxgl.Marker()
+                        .setLngLat(data.features[0].geometry.coordinates)
+                        .addTo(this.map)
+                    })
+                })
             }
             catch (err) {
                 console.log("map error", err);
@@ -64,7 +71,7 @@ export default {
                 .range(from, to);
             
             if (error) throw error;
-            console.log(data);
+            // console.log(data);
 
             for (let item in data) {
                 this.addMarker(item);
