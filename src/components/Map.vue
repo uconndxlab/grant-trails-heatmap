@@ -4,8 +4,8 @@
 
 <script>
 
-import supabase from "@/supabase";
 import mapboxgl from "mapbox-gl";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
     name: "MapVue",
@@ -14,10 +14,21 @@ export default {
             accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN
         };
     },
+    computed: {
+        ...mapGetters({
+            coordinates: 'coordinates'
+        })
+    },
+    created() {
+        this.bootstrap();
+    },
     mounted() {
         this.createMap();
     },
     methods: {
+        ...mapActions({
+            bootstrap: 'bootstrap'
+        }),
         async createMap() {
             try {
                 mapboxgl.accessToken = this.accessToken;
@@ -28,54 +39,24 @@ export default {
                     center: [-72.7, 41.45],
                     zoom: 8.5
                 });
-                
-                let { data: zipCodes, error } = await supabase
-                    .from('purchases')
-                    .select('Zip')
-                
-                if (error) throw error;
-                // the line below will crash the site -- too many records
-                //for (let i = 0; i < count / 1000; i++) this.loadPageToMap(i);
-                // this.loadPageToMap(2);
-                console.log(mapboxgl)
-                zipCodes.forEach((zipCode) => {
-                    mapboxgl.geocode(zipCode.Zip, {}, (err, data) => {
-                        new mapboxgl.Marker()
-                        .setLngLat(data.features[0].geometry.coordinates)
-                        .addTo(this.map)
-                    })
-                })
             }
             catch (err) {
                 console.log("map error", err);
             }
 
         },
-        async loadPageToMap(page = 1) {
-            // pagination func
-            const getPagination = (page, size) => {
-                const limit = size ? +size : 3;
-                const from = page ? page * limit : 0;
-                const to = page ? from + size : size;
+        // async loadPageToMap(page = 1) {
+        //     // pagination func
+        //     const getPagination = (page, size) => {
+        //         const limit = size ? +size : 3;
+        //         const from = page ? page * limit : 0;
+        //         const to = page ? from + size : size;
 
-                return { from, to };
-            };
+        //         return { from, to };
+        //     };
 
             // for each new zipcode in "purchases" we want to geocode it and add a marker to map
             // we want to paginate this to not overwhelm the site
-            const { from, to } = getPagination(page, 1000);
-            const { data, error } = await supabase
-                .from("purchases")
-                .select("*", {count: "exact"})
-                .order("id", {ascending: true})
-                .range(from, to);
-            
-            if (error) throw error;
-            // console.log(data);
-
-            for (let item in data) {
-                this.addMarker(item);
-            }
         },
         async addMarker(zip_target) {
                 if (zip_target === "") return; // for when we have no zipcode
@@ -100,6 +81,5 @@ export default {
                 .addTo(this.map);
         }
     }
-}
 
 </script>
