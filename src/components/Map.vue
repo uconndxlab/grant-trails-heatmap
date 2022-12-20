@@ -6,6 +6,7 @@
 
 import mapboxgl from "mapbox-gl";
 import { mapActions, mapGetters } from "vuex";
+import supabase from "@/supabase"
 
 export default {
     name: "MapVue",
@@ -39,6 +40,18 @@ export default {
                     center: [-72.7, 41.45],
                     zoom: 8.5
                 });
+
+                const { data, error } = await supabase
+                    .from("purchases")
+                    .select("Location");
+                
+                if (error) throw error;
+                console.log(data);
+                
+                for (let i = 0; i < 10000; i++) {
+                    this.addMarker(data[i]);
+                }
+
             }
             catch (err) {
                 console.log("map error", err);
@@ -57,29 +70,24 @@ export default {
 
             // for each new zipcode in "purchases" we want to geocode it and add a marker to map
             // we want to paginate this to not overwhelm the site
-        },
-        async addMarker(zip_target) {
-                if (zip_target === "") return; // for when we have no zipcode
+        //},
+        async addMarker(location) {
+                if (!location) return; // for when we have no coords
 
                 //only looking for places in the US
-                const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${zip_target}.json?country=US&access_token=${this.accessToken}`;
-                const response = await fetch(endpoint);
-                const results = await response.json()
+                //const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${zip_target}.json?country=US&access_token=${this.accessToken}`;
+                //const response = await fetch(endpoint);
+                //const results = await response.json()
 
+                //location = JSON.stringify(location)
                 this.marker = new mapboxgl.Marker({
                     draggable: false,
                     color: "#0a009c" // change to whatever color we want later
                 })
-                .setLngLat(results["features"][0]["center"])
-                // adding popups - can tweak later
-                .setPopup(
-                    new mapboxgl.Popup({ offset: 25 })
-                        .setHTML(
-                            `<h3>${results["features"]["place_name"]}</h3>`
-                        )
-                )
+                .setLngLat(location["Location"])
                 .addTo(this.map);
         }
     }
+}
 
 </script>
