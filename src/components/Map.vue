@@ -21,7 +21,7 @@ export default {
         })
     },
     created() {
-        this.bootstrap();
+        //this.bootstrap();
     },
     mounted() {
         this.createMap();
@@ -40,16 +40,16 @@ export default {
                     center: [-72.7, 41.45],
                     zoom: 8.5
                 });
-
+                
+                // plotting markers with pre-computed lat long coordinates
                 const { data, error } = await supabase
-                    .from("purchases")
-                    .select("Location");
-                
+                    .from("purchases_condensed")
+                    .select();
                 if (error) throw error;
-                console.log(data);
+                //console.log(data);
                 
-                for (let i = 0; i < 10000; i++) {
-                    this.addMarker(data[i]);
+                for (let i = 0; i < data.length; i++) {
+                    this.addMarker(data[i]["location"], data[i]["totalamount"]);
                 }
 
             }
@@ -58,33 +58,15 @@ export default {
             }
 
         },
-        // async loadPageToMap(page = 1) {
-        //     // pagination func
-        //     const getPagination = (page, size) => {
-        //         const limit = size ? +size : 3;
-        //         const from = page ? page * limit : 0;
-        //         const to = page ? from + size : size;
+        async addMarker(location, totalAmount) {
+                let locArr = location.split(",").map(Number);
+                //console.log(locArr);
 
-        //         return { from, to };
-        //     };
-
-            // for each new zipcode in "purchases" we want to geocode it and add a marker to map
-            // we want to paginate this to not overwhelm the site
-        //},
-        async addMarker(location) {
-                if (!location) return; // for when we have no coords
-
-                //only looking for places in the US
-                //const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${zip_target}.json?country=US&access_token=${this.accessToken}`;
-                //const response = await fetch(endpoint);
-                //const results = await response.json()
-
-                //location = JSON.stringify(location)
                 this.marker = new mapboxgl.Marker({
-                    draggable: false,
+                    scale: 1 + 0.000000075 * totalAmount, // arbitrary sizing method - change later
                     color: "#0a009c" // change to whatever color we want later
                 })
-                .setLngLat(location["Location"])
+                .setLngLat(locArr)
                 .addTo(this.map);
         }
     }
