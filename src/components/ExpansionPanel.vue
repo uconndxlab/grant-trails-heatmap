@@ -6,7 +6,7 @@
                     Filters
                 </v-expansion-panel-title>
                 <v-expansion-panel-text>
-                    PUT YOUR FILTERS HERERERE
+                    <FiltersVue />
                 </v-expansion-panel-text>
             </v-expansion-panel>
             <v-expansion-panel :key="1">
@@ -37,8 +37,11 @@
 </template>
 
 <script>
+import FiltersVue from './Filters.vue';
+
 export default ({
-    name: "ExpansionPanelVue"
+    name: "ExpansionPanelVue",
+    components: { FiltersVue }
 })
 
 </script>
