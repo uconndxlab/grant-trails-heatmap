@@ -42,11 +42,14 @@ export default {
                 });
                 
                 // plotting markers with pre-computed lat long coordinates
-                const { data, error } = await supabase
-                    .from("purchases_condensed")
-                    .select();
-                if (error) throw error;
+                // const { data, error } = await supabase
+                //     .from("purchases_condensed")
+                //     .select();
+                // if (error) throw error;
                 //console.log(data);
+
+                let { data, error } = await supabase.rpc('fetchtotalamount')
+                if (error) console.error(error)
                 
                 for (let i = 0; i < data.length; i++) {
                     this.addMarker(data[i]["location"], data[i]["totalamount"]);
