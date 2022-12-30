@@ -3,23 +3,26 @@ import supabase from "@/supabase";
 
 export default createStore({
   state: {
-    zipcodes: [],
-    coordinates: [],
+    grants: [],
+    condensedPurchases: [],
   },
   getters: {
-    zipcodes(state) {
-      return state.zipcodes;
+    grants(state) {
+      return state.grants;
     },
-    coordinates(state) {
-      return state.coordinates;
+    condensedPurchases(state) {
+      return state.condensedPurchases;
     },
     bootstrapped(state) {
       return state.dataHasBeenRetrieved;
     },
   },
   mutations: {
-    setCoordinates(state, coordinates) {
-      state.coordinates = coordinates;
+    setAllGrants(state, grants) {
+      state.grants = grants;
+    },
+    setCondensedPurchases(state, condensedPurchases) {
+      state.condensedPurchases = condensedPurchases;
     },
     setDataHasBeenRetrieved(state, retrievedStatus) {
       state.dataHasBeenRetrieved = retrievedStatus;
@@ -27,31 +30,24 @@ export default createStore({
   },
   actions: {
     async bootstrap({ dispatch, commit }) {
-      await dispatch("getCoordinates");
+      await dispatch("fetchCondensedPurchases");
+      await dispatch("fetchAllGrants");
       console.log("bootstrapped");
       commit("setDataHasBeenRetrieved", true);
     },
-    async getCoordinates({ commit }) {
-      let { data: zipCodes, error } = await supabase
-        .from("purchases")
-        .select("Zip");
-      if (error) throw error;
 
-      let coordinates = [];
+    async fetchCondensedPurchases({ commit }) {
+      let { data, error } = await supabase.rpc("fetchtotalamount");
+      if (error) console.error(error);
 
-      const mapBoxToken = process.env.VUE_APP_MAPBOX_ACCESS_TOKEN;
-      for await (const zipCode of zipCodes) {
-        if (zipCode.Zip) {
-          const response = await fetch(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipCode.Zip}.json?access_token=${mapBoxToken}&limit=1`
-          );
-          const data = await response.json();
-          coordinates.push(data.features[0].geometry.coordinates);
-        }
-      }
+      commit("setCondensedPurchases", data);
+    },
 
-      commit("setCoordinates", coordinates);
-      console.log(coordinates);
+    async fetchAllGrants({ commit }) {
+      let { data, error } = await supabase.rpc("fetchallgrants");
+      if (error) console.error(error);
+      else commit("setAllGrants", data);
+      console.log(data);
     },
   },
   modules: {},

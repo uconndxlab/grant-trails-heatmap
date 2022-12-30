@@ -12,6 +12,7 @@
         <v-select
             :items="['All', '2014', '2015', '2016', '2017', '2018', '2019', '2020']" 
             chips
+            multiple="true"
             density="compact"
             variant="underlined"
             @change="filterResultsByCurrentState()"
@@ -36,9 +37,29 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 
 export default ({
-    name: 'FiltersVue'
+    name: 'FiltersVue',
+    computed: {
+        ...mapGetters({
+            grants: 'grants'
+        }),
+    },
+    mounted() {
+        this.bootstrap();
+    },
+    methods: {
+        ...mapActions({
+            bootstrap: 'bootstrap'
+        }),
+        filterResultsByCurrentState() {
+            // const type = this.current_type;
+            // const year = this.current_year;
+        }
+    }
+
 })
 
 </script>
