@@ -1,34 +1,32 @@
 <template>
     <div>
         <v-select
-            :items="['All', 'Federal', 'State', 'Corporate', 'University', 'Non-profit', 'Other']"
+            :items="['All', 'Federal', 'State/CT', 'State(Not CT)', 'Corporate', 'University', 'Non-profit', 'Other']"
+            v-model="current_type"
             chips
             density="compact"
             variant="underlined"
-            @change="filterResultsByCurrentState()"
+            @update:modelValue="filterResultsByCurrentState()"
             label="Grant Type">
         </v-select>
 
         <v-select
             :items="['All', '2014', '2015', '2016', '2017', '2018', '2019', '2020']" 
+            v-model="current_year"
             chips
-            multiple="true"
             density="compact"
             variant="underlined"
-            @change="filterResultsByCurrentState()"
+            @update:modelValue="filterResultsByCurrentState()"
             label="Fiscal Year" >
         </v-select>
 
         <v-list id="result-list">
             <v-item-group>
-                <v-list-item v-for="i in results" :key="i.fund_type ">
+                <v-list-item v-for="grant in grants" :key="grant.city ">
                     <v-list-item-media>
-                        <v-list-item-title>Grant Name Here</v-list-item-title>
-                            <!-- <span v-if="current_year !== 'All'"><strong>{{current_year}}: </strong>{{ins['Award_Amount_' + current_year]}} </span>
-                            <span v-if="current_year == 'All'"><strong>Total Awards (2011-2022) </strong>{{ins['total_award']}} </span>
-
-                            <span v-if="current_year !== 'All'"><strong>{{current_year}} Jobs: </strong>{{ins['jobs_' + current_year]}} </span>
-                            <span v-if="current_year == 'All'"><strong> Total Jobs (2011-2022) </strong>{{ins['total_jobs']}} </span> -->
+                        <v-list-item-title>{{ toUSD(grant.city) }}</v-list-item-title>
+                        <span>{{ grant.zip }} CT, US</span><br />
+                        <span><strong>{{ toUSD(grant.totalamount) }}</strong></span>
                     </v-list-item-media>
                 </v-list-item>
             </v-item-group>
@@ -42,6 +40,12 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default ({
     name: 'FiltersVue',
+    data: () => ({
+        current_type: "All",
+        current_year: "All",
+
+        combinedResults: []
+    }),
     computed: {
         ...mapGetters({
             grants: 'grants'
@@ -52,14 +56,25 @@ export default ({
     },
     methods: {
         ...mapActions({
-            bootstrap: 'bootstrap'
+            bootstrap: 'bootstrap',
+            filteringGrants: 'fetchFilterGrants'
         }),
         filterResultsByCurrentState() {
-            // const type = this.current_type;
-            // const year = this.current_year;
+            console.log('filtering')
+            const searchOptions = []
+            searchOptions.push(this.current_year)
+            searchOptions.push(this.current_type)
+            console.log(searchOptions)
+            this.filteringGrants(searchOptions)
+        },
+        toUSD(amount) {
+            const formattedNumber = amount.toLocaleString('en-US', {
+                style: 'currency', currency: 'USD' });
+            return formattedNumber
+            }
         }
     }
 
-})
+)
 
 </script>

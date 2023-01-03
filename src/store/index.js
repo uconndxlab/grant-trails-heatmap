@@ -18,7 +18,7 @@ export default createStore({
     },
   },
   mutations: {
-    setAllGrants(state, grants) {
+    setGrants(state, grants) {
       state.grants = grants;
     },
     setCondensedPurchases(state, condensedPurchases) {
@@ -46,7 +46,21 @@ export default createStore({
     async fetchAllGrants({ commit }) {
       let { data, error } = await supabase.rpc("fetchallgrants");
       if (error) console.error(error);
-      else commit("setAllGrants", data);
+      else commit("setGrants", data);
+      console.log(data);
+    },
+
+    async fetchFilterGrants({ commit }, searchOptions) {
+      console.log(searchOptions[0]);
+      console.log(searchOptions[1]);
+      let { data, error } = await supabase
+        .from("purchases")
+        .select("*")
+        .eq("fiscal_year", searchOptions[0])
+        .eq("fund_type", searchOptions[1]);
+
+      if (error) console.error(error);
+      else commit("setGrants", data);
       console.log(data);
     },
   },
