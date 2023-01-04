@@ -12,7 +12,8 @@ export default {
     name: "MapVue",
     data() {
         return {
-            accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN
+            //accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN
+            accessToken: "pk.eyJ1IjoidWNvbm5keGdyb3VwIiwiYSI6ImNrcTg4dWc5NzBkcWYyd283amtpNjFiZXkifQ.iGpZ5PfDWFWWPkuDeGQ3NQ"
         };
     },
     computed: {
@@ -64,9 +65,10 @@ export default {
 
                 // DOM element for each marker
                 const el = document.createElement("div");
-                const diameter = 20 + 0 * totalAmount;
+                const diameter = 20 + 0.01 * Math.sqrt(totalAmount);
                 el.className = "marker";
-                el.style.backgroundImage = `url(/src/assets/img/marker-icon.png)`;
+                el.style.backgroundColor = "#0a2a77";
+                el.style.border = "solid white";
                 el.style.width = `${diameter}px`;
                 el.style.height = `${diameter}px`;
                 el.style.backgroundSize = "100%";
