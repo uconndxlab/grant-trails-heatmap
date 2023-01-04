@@ -11,9 +11,10 @@
         </v-select>
 
         <v-select
-            :items="['All', '2014', '2015', '2016', '2017', '2018', '2019', '2020']" 
+            :items="['2014', '2015', '2016', '2017', '2018', '2019', '2020']" 
             v-model="current_year"
             chips
+            multiple
             density="compact"
             variant="underlined"
             @update:modelValue="filterResultsByCurrentState()"
@@ -22,11 +23,11 @@
 
         <v-list id="result-list">
             <v-item-group>
-                <v-list-item v-for="grant in grants" :key="grant.city ">
+                <v-list-item v-for="grant in grants" :key="grant.grants_zip ">
                     <v-list-item-media>
-                        <v-list-item-title>{{ toUSD(grant.city) }}</v-list-item-title>
-                        <span>{{ grant.zip }} CT, US</span><br />
-                        <span><strong>{{ toUSD(grant.totalamount) }}</strong></span>
+                        <v-list-item-title>{{ grant.grants_city }}</v-list-item-title>
+                        <span>{{ grant.grants_zip }} CT, US</span><br />
+                        <span><strong>{{ toUSD(grant.total_amount) }}</strong></span>
                     </v-list-item-media>
                 </v-list-item>
             </v-item-group>
@@ -42,7 +43,7 @@ export default ({
     name: 'FiltersVue',
     data: () => ({
         current_type: "All",
-        current_year: "All",
+        current_year: "2020",
 
         combinedResults: []
     }),

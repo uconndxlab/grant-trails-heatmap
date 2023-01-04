@@ -31,7 +31,7 @@ export default createStore({
   actions: {
     async bootstrap({ dispatch, commit }) {
       await dispatch("fetchCondensedPurchases");
-      await dispatch("fetchAllGrants");
+      await dispatch("fetchFilterGrants", [["2020"], "All"]);
       console.log("bootstrapped");
       commit("setDataHasBeenRetrieved", true);
     },
@@ -51,14 +51,17 @@ export default createStore({
     },
 
     async fetchFilterGrants({ commit }, searchOptions) {
-      console.log(searchOptions[0]);
-      console.log(searchOptions[1]);
-      let { data, error } = await supabase
-        .from("purchases")
-        .select("*")
-        .eq("fiscal_year", searchOptions[0])
-        .eq("fund_type", searchOptions[1]);
-
+      let selected_fiscal_years = [];
+      if (typeof searchOptions[0] == "string") {
+        selected_fiscal_years.push(searchOptions[0]);
+      } else {
+        selected_fiscal_years = searchOptions[0];
+      }
+      let selected_fund_type = searchOptions[1];
+      let { data, error } = await supabase.rpc("fetchfilteredpurchases", {
+        selected_fiscal_years,
+        selected_fund_type,
+      });
       if (error) console.error(error);
       else commit("setGrants", data);
       console.log(data);
