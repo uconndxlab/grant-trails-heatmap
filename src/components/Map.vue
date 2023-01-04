@@ -62,14 +62,30 @@ export default {
                 let locArr = location.split(",").map(Number);
                 //console.log(locArr);
 
-                this.marker = new mapboxgl.Marker({
-                    scale: 1 + 0.000000075 * totalAmount, // arbitrary sizing method - change later
-                    color: "#0a009c" // change to whatever color we want later
-                })
-                .setLngLat(locArr)
-                .addTo(this.map);
+                // DOM element for each marker
+                const el = document.createElement("div");
+                const diameter = 20 + 0 * totalAmount;
+                el.className = "marker";
+                el.style.backgroundImage = `url(/src/assets/img/marker-icon.png)`;
+                el.style.width = `${diameter}px`;
+                el.style.height = `${diameter}px`;
+                el.style.backgroundSize = "100%";
+
+                this.marker = new mapboxgl.Marker(el)
+                    .setLngLat(locArr)
+                    .addTo(this.map);
         }
     }
 }
 
 </script>
+
+<style>
+    .marker {
+        display: block;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0;
+    }
+</style>
