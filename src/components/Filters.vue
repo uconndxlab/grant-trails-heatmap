@@ -11,7 +11,7 @@
         </v-select>
 
         <v-select
-            :items="['2014', '2015', '2016', '2017', '2018', '2019', '2020']" 
+            :items="['2020', '2021']" 
             v-model="current_year"
             chips
             multiple
@@ -43,9 +43,7 @@ export default ({
     name: 'FiltersVue',
     data: () => ({
         current_type: "All",
-        current_year: "2020",
-
-        combinedResults: []
+        current_year: "2020, 2021",
     }),
     computed: {
         ...mapGetters({
