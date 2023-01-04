@@ -6,7 +6,7 @@
 
 import mapboxgl from "mapbox-gl";
 import { mapActions, mapGetters } from "vuex";
-import supabase from "@/supabase"
+// import supabase from "@/supabase"
 
 export default {
     name: "MapVue",
@@ -21,7 +21,7 @@ export default {
         })
     },
     created() {
-        //this.bootstrap();
+        // this.bootstrap();
     },
     mounted() {
         this.createMap();
@@ -42,15 +42,18 @@ export default {
                 });
                 
                 // plotting markers with pre-computed lat long coordinates
-                const { data, error } = await supabase
-                    .from("purchases_condensed")
-                    .select();
-                if (error) throw error;
+                // const { data, error } = await supabase
+                //     .from("purchases_condensed")
+                //     .select();
+                // if (error) throw error;
                 //console.log(data);
+
+                // let { data, error } = await supabase.rpc('fetchtotalamount')
+                // if (error) console.error(error)
                 
-                for (let i = 0; i < data.length; i++) {
-                    this.addMarker(data[i]["location"], data[i]["totalamount"]);
-                }
+                // for (let i = 0; i < data.length; i++) {
+                //     this.addMarker(data[i]["location"], data[i]["totalamount"]);
+                // }
 
             }
             catch (err) {
@@ -58,17 +61,17 @@ export default {
             }
 
         },
-        async addMarker(location, totalAmount) {
-                let locArr = location.split(",").map(Number);
-                //console.log(locArr);
+        // async addMarker(location, totalAmount) {
+        //         let locArr = location.split(",").map(Number);
+        //         //console.log(locArr);
 
-                this.marker = new mapboxgl.Marker({
-                    scale: 1 + 0.000000075 * totalAmount, // arbitrary sizing method - change later
-                    color: "#0a009c" // change to whatever color we want later
-                })
-                .setLngLat(locArr)
-                .addTo(this.map);
-        }
+        //         this.marker = new mapboxgl.Marker({
+        //             scale: 1 + 0.000000075 * totalAmount, // arbitrary sizing method - change later
+        //             color: "#0a009c" // change to whatever color we want later
+        //         })
+        //         .setLngLat(locArr)
+        //         .addTo(this.map);
+        // }
     }
 }
 
