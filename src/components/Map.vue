@@ -61,17 +61,13 @@ export default {
         },
         async addMarker(location, totalAmount) {
                 let locArr = location.split(",").map(Number);
-                //console.log(locArr);
 
                 // DOM element for each marker
                 const el = document.createElement("div");
-                const diameter = 20 + 0.01 * Math.sqrt(totalAmount);
+                const diameter = 20 + 0.01 * Math.sqrt(totalAmount); // one way to show scale of different amounts
                 el.className = "marker";
-                el.style.backgroundColor = "#0a2a77";
-                el.style.border = "solid white";
                 el.style.width = `${diameter}px`;
                 el.style.height = `${diameter}px`;
-                el.style.backgroundSize = "100%";
 
                 this.marker = new mapboxgl.Marker(el)
                     .setLngLat(locArr)
@@ -84,8 +80,10 @@ export default {
 
 <style>
     .marker {
+        background-color: #0a2a77;
+        background-size: 100%;
         display: block;
-        border: none;
+        border: solid #ffffff;
         border-radius: 50%;
         cursor: pointer;
         padding: 0;
