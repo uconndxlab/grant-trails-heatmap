@@ -63,7 +63,6 @@ export default ({
             const searchOptions = []
             searchOptions.push(this.current_year)
             searchOptions.push(this.current_type)
-            console.log(searchOptions)
             this.filteringGrants(searchOptions)
         },
         toUSD(amount) {
