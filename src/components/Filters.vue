@@ -23,10 +23,10 @@
 
         <v-list id="result-list">
             <v-item-group>
-                <v-list-item v-for="grant in grants" :key="grant.grants_zip ">
+                <v-list-item v-for="grant in limitedResults" :key="grant.id">
                     <v-list-item-media>
-                        <v-list-item-title>{{ grant.grants_city }}</v-list-item-title>
-                        <span>{{ grant.grants_zip }} CT, US</span><br />
+                        <v-list-item-title>{{ titleCase(grant.grants_city) }}</v-list-item-title>
+                        <span>0{{ grant.grants_zip }} CT, US</span><br />
                         <span><strong>{{ toUSD(grant.total_amount) }}</strong></span>
                     </v-list-item-media>
                 </v-list-item>
@@ -49,6 +49,9 @@ export default ({
         ...mapGetters({
             grants: 'grants'
         }),
+        limitedResults() {
+            return this.grants.slice(0, 500)
+        }
     },
     mounted() {
         this.bootstrap();
@@ -70,9 +73,17 @@ export default ({
             const formattedNumber = amount.toLocaleString('en-US', {
                 style: 'currency', currency: 'USD' });
             return formattedNumber
-            }
+        },
+        titleCase(str) {
+            return str.toLowerCase()
+              .split(' ')
+              .map(function(word) {
+                return word[0].toUpperCase() + word.slice(1);
+              })
+              .join(' ');
         }
     }
+}
 
 )
 

@@ -53,12 +53,14 @@ export default createStore({
     async fetchFilterGrants({ commit }, searchOptions) {
       let selected_fiscal_years = [];
       if (typeof searchOptions[0] == "string") {
-        selected_fiscal_years.push(searchOptions[0]);
+        let year_num = parseInt(searchOptions[0]);
+        selected_fiscal_years.push(year_num);
       } else {
-        selected_fiscal_years = searchOptions[0];
+        let year_nums = searchOptions[0].map((number) => parseInt(number));
+        selected_fiscal_years = year_nums;
       }
       let selected_fund_type = searchOptions[1];
-      let { data, error } = await supabase.rpc("fetchfilteredpurchases", {
+      let { data, error } = await supabase.rpc("fetchfilteredpurchasestotal", {
         selected_fiscal_years,
         selected_fund_type,
       });
