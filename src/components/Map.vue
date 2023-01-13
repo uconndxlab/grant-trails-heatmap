@@ -6,7 +6,6 @@
 
 import mapboxgl from "mapbox-gl";
 import { mapActions, mapGetters } from "vuex";
-import supabase from "@/supabase"
 
 export default {
     name: "MapVue",
@@ -22,7 +21,7 @@ export default {
         })
     },
     created() {
-        //this.bootstrap();
+        // this.bootstrap();
     },
     mounted() {
         this.createMap();
@@ -41,37 +40,24 @@ export default {
                     center: [-72.7, 41.45],
                     zoom: 8.5
                 });
-                
-                // plotting markers with pre-computed lat long coordinates
-                const { data, error } = await supabase
-                    .from("purchases_condensed")
-                    .select();
-                if (error) throw error;
-                //console.log(data);
-                
-                for (let i = 0; i < data.length; i++) {
-                    this.addMarker(data[i]["location"], data[i]["totalamount"]);
-                }
-
             }
             catch (err) {
                 console.log("map error", err);
             }
 
         },
-        async addMarker(location, totalAmount) {
-                let locArr = location.split(",").map(Number);
-
-                // DOM element for each marker
+        async addMarkers(grantObj) {
+            for (let grant in grantObj) {
                 const el = document.createElement("div");
-                const diameter = 20 + 0.01 * Math.sqrt(totalAmount); // one way to show scale of different amounts
+                const diam = 20 + 0.01 * Math.sqrt(grant.total_amount);
                 el.className = "marker";
-                el.style.width = `${diameter}px`;
-                el.style.height = `${diameter}px`;
+                el.style.width = `${diam}px`;
+                el.style.height = `${diam}px`;
 
                 this.marker = new mapboxgl.Marker(el)
-                    .setLngLat(locArr)
+                    .setLngLat([JSON.parse(grant.grant_location)])
                     .addTo(this.map);
+            }
         }
     }
 }
