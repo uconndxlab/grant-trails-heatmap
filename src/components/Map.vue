@@ -6,13 +6,13 @@
 
 import mapboxgl from "mapbox-gl";
 import { mapActions, mapGetters } from "vuex";
-// import supabase from "@/supabase"
 
 export default {
     name: "MapVue",
     data() {
         return {
-            accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN
+            //accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN
+            accessToken: "pk.eyJ1IjoidWNvbm5keGdyb3VwIiwiYSI6ImNrcTg4dWc5NzBkcWYyd283amtpNjFiZXkifQ.iGpZ5PfDWFWWPkuDeGQ3NQ"
         };
     },
     computed: {
@@ -40,39 +40,38 @@ export default {
                     center: [-72.7, 41.45],
                     zoom: 8.5
                 });
-                
-                // plotting markers with pre-computed lat long coordinates
-                // const { data, error } = await supabase
-                //     .from("purchases_condensed")
-                //     .select();
-                // if (error) throw error;
-                //console.log(data);
-
-                // let { data, error } = await supabase.rpc('fetchtotalamount')
-                // if (error) console.error(error)
-                
-                // for (let i = 0; i < data.length; i++) {
-                //     this.addMarker(data[i]["location"], data[i]["totalamount"]);
-                // }
-
             }
             catch (err) {
                 console.log("map error", err);
             }
 
         },
-        // async addMarker(location, totalAmount) {
-        //         let locArr = location.split(",").map(Number);
-        //         //console.log(locArr);
+        async addMarkers(grantObj) {
+            for (let grant in grantObj) {
+                const el = document.createElement("div");
+                const diam = 20 + 0.01 * Math.sqrt(grant.total_amount);
+                el.className = "marker";
+                el.style.width = `${diam}px`;
+                el.style.height = `${diam}px`;
 
-        //         this.marker = new mapboxgl.Marker({
-        //             scale: 1 + 0.000000075 * totalAmount, // arbitrary sizing method - change later
-        //             color: "#0a009c" // change to whatever color we want later
-        //         })
-        //         .setLngLat(locArr)
-        //         .addTo(this.map);
-        // }
+                this.marker = new mapboxgl.Marker(el)
+                    .setLngLat([JSON.parse(grant.grant_location)])
+                    .addTo(this.map);
+            }
+        }
     }
 }
 
 </script>
+
+<style>
+    .marker {
+        background-color: #0a2a77;
+        background-size: 100%;
+        display: block;
+        border: solid #ffffff;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0;
+    }
+</style>
