@@ -75,16 +75,18 @@ export default ({
             return formattedNumber
         },
         titleCase(str) {
-            return str.toLowerCase()
+            if (str != null) {
+                return str.toLowerCase()
               .split(' ')
               .map(function(word) {
                 return word[0].toUpperCase() + word.slice(1);
               })
               .join(' ');
-        }
+            }
+            else {
+                return str
+            }
     }
-}
-
-)
+}})
 
 </script>
