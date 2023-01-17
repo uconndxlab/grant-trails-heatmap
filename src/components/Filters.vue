@@ -38,9 +38,7 @@
 </template>
 
 <script>
-//import toRaw from 'vue';
 import { mapActions, mapGetters } from 'vuex';
-import addMarkers from '@/components/Map.vue'
 
 export default ({
     name: 'FiltersVue',
@@ -77,7 +75,6 @@ export default ({
             searchOptions.push(this.current_type)
             console.log(searchOptions)
             this.filteringGrants(searchOptions)
-            addMarkers(this.grants)
         },
         filterResultsBySearchTerm() {
         },

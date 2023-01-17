@@ -20,8 +20,10 @@ export default {
             grants: 'grants'
         })
     },
-    created() {
-        // this.bootstrap();
+    watch:{
+        grants(){
+            this.addMarkers(this.grants)
+        }
     },
     mounted() {
         this.createMap();
@@ -44,10 +46,12 @@ export default {
             catch (err) {
                 console.log("map error", err);
             }
+            this.addMarkers(this.grants);
 
         },
         async addMarkers(grantObj) {
-            for (let grant in grantObj) {
+            console.log('Adding markers!')
+            for (let grant of grantObj) {
                 const el = document.createElement("div");
                 const diam = 20 + 0.01 * Math.sqrt(grant.total_amount);
                 el.className = "marker";
@@ -55,7 +59,7 @@ export default {
                 el.style.height = `${diam}px`;
 
                 this.marker = new mapboxgl.Marker(el)
-                    .setLngLat([JSON.parse(grant.grant_location)])
+                    .setLngLat(JSON.parse(grant.grants_location))
                     .addTo(this.map);
             }
         }
