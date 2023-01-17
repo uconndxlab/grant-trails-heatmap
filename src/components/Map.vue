@@ -52,6 +52,9 @@ export default {
         async addMarkers(grantObj) {
             console.log('Adding markers!')
             for (let grant of grantObj) {
+                grant = JSON.parse(JSON.stringify(grant)); //convert proxy objects to arrays
+                console.log(grant);
+                
                 const el = document.createElement("div");
                 const diam = 20 + 0.01 * Math.sqrt(grant.total_amount);
                 el.className = "marker";
