@@ -11,17 +11,19 @@ export default {
     name: "MapVue",
     data() {
         return {
-            //accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN
-            accessToken: "pk.eyJ1IjoidWNvbm5keGdyb3VwIiwiYSI6ImNrcTg4dWc5NzBkcWYyd283amtpNjFiZXkifQ.iGpZ5PfDWFWWPkuDeGQ3NQ"
+            accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN
         };
     },
     computed: {
         ...mapGetters({
-            coordinates: 'coordinates'
+            coordinates: 'coordinates',
+            grants: 'grants'
         })
     },
-    created() {
-        this.bootstrap();
+    watch:{
+        grants(){
+            this.addMarkers(this.grants)
+        }
     },
     mounted() {
         this.createMap();
@@ -44,9 +46,23 @@ export default {
             catch (err) {
                 console.log("map error", err);
             }
+            this.addMarkers(this.grants);
 
+        },
+        async addMarkers(grantObj) {
+            console.log('Adding markers!')
+            for (let grant of grantObj) {
+                const el = document.createElement("div");
+                const diam = 20 + 0.01 * Math.sqrt(grant.total_amount);
+                el.className = "marker";
+                el.style.width = `${diam}px`;
+                el.style.height = `${diam}px`;
+
+                this.marker = new mapboxgl.Marker(el)
+                    .setLngLat(JSON.parse(grant.grants_location))
+                    .addTo(this.map);
+            }
         }
-        
     }
 }
 
