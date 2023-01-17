@@ -88,3 +88,7 @@ export default ({
 })
 
 </script>
+
+<style>
+    @import '../assets/index.css';
+</style>

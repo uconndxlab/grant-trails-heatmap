@@ -52,6 +52,16 @@
     opacity:0;
   }
 
+  .marker {
+    background-color: #0a2a77;
+    background-size: 100%;
+    display: block;
+    border: solid #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+  }
+
   .marker-orange,
   .marker-red,
   .marker-green,
@@ -103,7 +113,8 @@
   #result-list, #result-description{
     height: 50vh;
     /* or any height you want */
-    overflow-y: auto
+    overflow-y: auto;
+    
   }
 /*============ navbar =============*/
 

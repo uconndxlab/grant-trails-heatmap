@@ -21,7 +21,7 @@ export default {
         })
     },
     created() {
-        // this.bootstrap();
+        this.bootstrap();
     },
     mounted() {
         this.createMap();
@@ -45,33 +45,13 @@ export default {
                 console.log("map error", err);
             }
 
-        },
-        async addMarkers(grantObj) {
-            for (let grant in grantObj) {
-                const el = document.createElement("div");
-                const diam = 20 + 0.01 * Math.sqrt(grant.total_amount);
-                el.className = "marker";
-                el.style.width = `${diam}px`;
-                el.style.height = `${diam}px`;
-
-                this.marker = new mapboxgl.Marker(el)
-                    .setLngLat([JSON.parse(grant.grant_location)])
-                    .addTo(this.map);
-            }
         }
+        
     }
 }
 
 </script>
 
 <style>
-    .marker {
-        background-color: #0a2a77;
-        background-size: 100%;
-        display: block;
-        border: solid #ffffff;
-        border-radius: 50%;
-        cursor: pointer;
-        padding: 0;
-    }
+    @import '../assets/index.css';
 </style>
