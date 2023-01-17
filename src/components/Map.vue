@@ -51,10 +51,10 @@ export default {
         },
         async addMarkers(grantObj) {
             console.log('Adding markers!')
-            for (let grant of grantObj) {
-                grant = JSON.parse(JSON.stringify(grant)); //convert proxy objects to arrays
-                console.log(grant);
-                
+            for (const grant of grantObj) {
+                //grant = JSON.parse(JSON.stringify(grant)); //convert proxy objects to arrays
+                console.log(grant.grants_location);
+
                 const el = document.createElement("div");
                 const diam = 20 + 0.01 * Math.sqrt(grant.total_amount);
                 el.className = "marker";
@@ -72,5 +72,14 @@ export default {
 </script>
 
 <style>
-    @import '../assets/index.css';
+    /*@import '../assets/index.css';*/
+    .marker {
+        background-color: #0a2a77;
+        background-size: 100%;
+        display: block;
+        border: solid #ffffff;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0;
+    }
 </style>
