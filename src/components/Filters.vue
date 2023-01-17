@@ -21,9 +21,11 @@
             label="Fiscal Year" >
         </v-select>
 
+        <v-text-field v-model="searchTerm" label="Search Results" @input="filterResultsBySearchTerm()"></v-text-field>
+
         <v-list id="result-list">
             <v-item-group>
-                <v-list-item v-for="grant in limitedResults" :key="grant.id">
+                <v-list-item v-for="grant in filteredGrants" :key="grant.id">
                     <v-list-item-media>
                         <v-list-item-title>{{ titleCase(grant.grants_city) }}</v-list-item-title>
                         <span>0{{ grant.grants_zip }} CT, US</span><br />
@@ -45,6 +47,7 @@ export default ({
     data: () => ({
         current_type: "All",
         current_year: "2020",
+        searchTerm: ''
     }),
     computed: {
         ...mapGetters({
@@ -52,6 +55,11 @@ export default ({
         }),
         limitedResults() {
             return this.grants.slice(0, 500)
+        },
+        filteredGrants() {
+            return this.limitedResults.filter(grant => {
+                return grant.grants_city.toLowerCase().includes(this.searchTerm.toLowerCase())
+            })
         }
     },
     mounted() {
@@ -70,6 +78,8 @@ export default ({
             console.log(searchOptions)
             this.filteringGrants(searchOptions)
             addMarkers(this.grants)
+        },
+        filterResultsBySearchTerm() {
         },
         toUSD(amount) {
             const formattedNumber = amount.toLocaleString('en-US', {

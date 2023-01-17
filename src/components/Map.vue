@@ -11,13 +11,13 @@ export default {
     name: "MapVue",
     data() {
         return {
-            //accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN
-            accessToken: "pk.eyJ1IjoidWNvbm5keGdyb3VwIiwiYSI6ImNrcTg4dWc5NzBkcWYyd283amtpNjFiZXkifQ.iGpZ5PfDWFWWPkuDeGQ3NQ"
+            accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN
         };
     },
     computed: {
         ...mapGetters({
-            coordinates: 'coordinates'
+            coordinates: 'coordinates',
+            grants: 'grants'
         })
     },
     created() {
