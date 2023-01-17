@@ -62,7 +62,7 @@ export default {
                 el.style.height = `${diam}px`;
 
                 this.marker = new mapboxgl.Marker(el)
-                    .setLngLat(JSON.parse(grant.grants_location))
+                    .setLngLat(JSON.parse(grant.grants_location).reverse())
                     .addTo(this.map);
             }
         }
