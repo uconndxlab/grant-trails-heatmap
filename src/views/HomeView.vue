@@ -16,6 +16,8 @@
 
 <script>
 // @ is an alias to /src
+import { mapActions } from 'vuex';
+
 import ExpansionPanelVue from '@/components/ExpansionPanel.vue';
 import MapVue from '@/components/Map.vue';
 
@@ -24,7 +26,15 @@ export default {
   components: {
     ExpansionPanelVue,
     MapVue
-  }
+  },
+  mounted() {
+        this.bootstrap();
+  },
+  methods: {
+      ...mapActions({
+        bootstrap: 'bootstrap',
+        })
+    }
 };
 </script>
 

@@ -60,12 +60,8 @@ export default ({
             })
         }
     },
-    mounted() {
-        this.bootstrap();
-    },
     methods: {
         ...mapActions({
-            bootstrap: 'bootstrap',
             filteringGrants: 'fetchFilterGrants'
         }),
         filterResultsByCurrentState() {
