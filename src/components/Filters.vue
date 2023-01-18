@@ -21,12 +21,14 @@
             label="Fiscal Year" >
         </v-select>
 
+        <v-text-field v-model="searchTerm" label="Search Results" @input="filterResultsBySearchTerm()"></v-text-field>
+
         <v-list id="result-list">
             <v-item-group>
-                <v-list-item v-for="grant in grants" :key="grant.grants_zip ">
+                <v-list-item v-for="grant in filteredGrants" :key="grant.id">
                     <v-list-item-media>
-                        <v-list-item-title>{{ grant.grants_city }}</v-list-item-title>
-                        <span>{{ grant.grants_zip }} CT, US</span><br />
+                        <v-list-item-title>{{ titleCase(grant.grants_city) }}</v-list-item-title>
+                        <span>0{{ grant.grants_zip }} CT, US</span><br />
                         <span><strong>{{ toUSD(grant.total_amount) }}</strong></span>
                     </v-list-item-media>
                 </v-list-item>
@@ -38,17 +40,25 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-
 export default ({
     name: 'FiltersVue',
     data: () => ({
         current_type: "All",
         current_year: "2020",
+        searchTerm: ''
     }),
     computed: {
         ...mapGetters({
             grants: 'grants'
         }),
+        limitedResults() {
+            return this.grants.slice(0, 500)
+        },
+        filteredGrants() {
+            return this.limitedResults.filter(grant => {
+                return grant.grants_city.toLowerCase().includes(this.searchTerm.toLowerCase())
+            })
+        }
     },
     mounted() {
         this.bootstrap();
@@ -65,14 +75,30 @@ export default ({
             searchOptions.push(this.current_type)
             this.filteringGrants(searchOptions)
         },
+        filterResultsBySearchTerm() {
+        },
         toUSD(amount) {
             const formattedNumber = amount.toLocaleString('en-US', {
                 style: 'currency', currency: 'USD' });
             return formattedNumber
+        },
+        titleCase(str) {
+            if (str != null) {
+                return str.toLowerCase()
+              .split(' ')
+              .map(function(word) {
+                return word[0].toUpperCase() + word.slice(1);
+              })
+              .join(' ');
             }
-        }
+            else {
+                return str
+            }
     }
-
-)
+}})
 
 </script>
+
+<style>
+    @import '../assets/index.css';
+</style>

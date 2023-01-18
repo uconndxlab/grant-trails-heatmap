@@ -6,7 +6,8 @@
 
 import mapboxgl from "mapbox-gl";
 import { mapActions, mapGetters } from "vuex";
-// import supabase from "@/supabase"
+
+var currentMarkers = [];
 
 export default {
     name: "MapVue",
@@ -17,11 +18,15 @@ export default {
     },
     computed: {
         ...mapGetters({
-            coordinates: 'coordinates'
+            coordinates: 'coordinates',
+            grants: 'grants'
         })
     },
-    created() {
-        // this.bootstrap();
+    watch:{
+        grants(){
+            this.clearMarkers(this.grants)
+            this.addMarkers(this.grants)
+        }
     },
     mounted() {
         this.createMap();
@@ -40,39 +45,51 @@ export default {
                     center: [-72.7, 41.45],
                     zoom: 8.5
                 });
-                
-                // plotting markers with pre-computed lat long coordinates
-                // const { data, error } = await supabase
-                //     .from("purchases_condensed")
-                //     .select();
-                // if (error) throw error;
-                //console.log(data);
-
-                // let { data, error } = await supabase.rpc('fetchtotalamount')
-                // if (error) console.error(error)
-                
-                // for (let i = 0; i < data.length; i++) {
-                //     this.addMarker(data[i]["location"], data[i]["totalamount"]);
-                // }
-
             }
             catch (err) {
                 console.log("map error", err);
             }
+            this.addMarkers(this.grants);
 
         },
-        // async addMarker(location, totalAmount) {
-        //         let locArr = location.split(",").map(Number);
-        //         //console.log(locArr);
+        async addMarkers(grantObj) {
+            console.log('Adding markers!')
+            for (const grant of grantObj) {
+                console.log(grant.grants_location);
 
-        //         this.marker = new mapboxgl.Marker({
-        //             scale: 1 + 0.000000075 * totalAmount, // arbitrary sizing method - change later
-        //             color: "#0a009c" // change to whatever color we want later
-        //         })
-        //         .setLngLat(locArr)
-        //         .addTo(this.map);
-        // }
+                const el = document.createElement("div");
+                const diam = 20 + 0.8 * Math.pow(grant.total_amount, 1/4);
+                el.className = "marker";
+                el.style.width = `${diam}px`;
+                el.style.height = `${diam}px`;
+
+                this.marker = new mapboxgl.Marker(el)
+                    .setLngLat(JSON.parse(grant.grants_location).reverse())
+                    .addTo(this.map);
+                currentMarkers.push(this.marker);
+            }
+        },
+        async clearMarkers() {
+            if (currentMarkers !== null) {
+                for (var i = currentMarkers.length - 1; i >= 0; i--) {
+                    currentMarkers[i].remove();
+                }
+            }
+        }
     }
 }
 
 </script>
+
+<style>
+    /*@import '../assets/index.css';*/
+    .marker {
+        background-color: #0a2a77;
+        background-size: 100%;
+        display: block;
+        border: solid #ffffff;
+        border-radius: 50%;
+        cursor: pointer;
+        padding: 0;
+    }
+</style>
