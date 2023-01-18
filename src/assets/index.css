@@ -24,7 +24,6 @@
 
   #footer{
     width: 100%;
-    position: fixed;
     bottom: 0;
   }
 
@@ -115,6 +114,11 @@
     /* or any height you want */
     overflow-y: auto;
     
+  }
+
+  #expansion-column{
+    height: calc(100vh - 155px);
+    overflow-y: auto;
   }
 /*============ navbar =============*/
 

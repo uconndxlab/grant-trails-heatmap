@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-select
-            :items="['All', 'Federal', 'State/CT', 'State(Not CT)', 'Corporate', 'University', 'Non-profit', 'Other']"
+            :items="['All', 'Federal', 'State/CT', 'State(Not CT)', 'Corporate' ]"
             v-model="current_type"
             chips
             density="compact"
@@ -60,12 +60,8 @@ export default ({
             })
         }
     },
-    mounted() {
-        this.bootstrap();
-    },
     methods: {
         ...mapActions({
-            bootstrap: 'bootstrap',
             filteringGrants: 'fetchFilterGrants'
         }),
         filterResultsByCurrentState() {

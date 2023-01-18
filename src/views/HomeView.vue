@@ -2,7 +2,7 @@
   <div id="homeView" align-content="left">
     <v-container fluid>
       <v-row class="d-block d-md-flex">
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" id="expansion-column">
           <ExpansionPanelVue />
         </v-col>
         <v-col cols="12" md="9">
@@ -16,6 +16,8 @@
 
 <script>
 // @ is an alias to /src
+import { mapActions } from 'vuex';
+
 import ExpansionPanelVue from '@/components/ExpansionPanel.vue';
 import MapVue from '@/components/Map.vue';
 
@@ -24,7 +26,15 @@ export default {
   components: {
     ExpansionPanelVue,
     MapVue
-  }
+  },
+  mounted() {
+        this.bootstrap();
+  },
+  methods: {
+      ...mapActions({
+        bootstrap: 'bootstrap',
+        })
+    }
 };
 </script>
 
