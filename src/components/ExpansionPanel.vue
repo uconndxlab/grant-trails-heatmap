@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import FiltersVue from './Filters.vue';
+import FiltersVue from '../components/Filters.vue';
 
 export default ({
     name: "ExpansionPanelVue",
