@@ -21,7 +21,7 @@
                     <!--TODO: Include a tooltip here hovering over where it says 85%
                     Content of the tooltip:
                     It's not 100% of the data because there were logistical issues that made getting some of the data challenging. That said, we have no reason to believe that the missing data would not be proportionally distributed, so the relative circle sizes shouldn't really change (though the exact dollar amounts might somewhat)-->
-                    <p>What you're looking at here is a visualization of where approximately 85% of direct grant dollars received by UConn faculty were spent within Connecticut between fiscal years 2014 to 2019.</p>
+                    <p>What you're looking at here is a visualization of where approximately 85% of direct grant dollars received by UConn faculty were spent within Connecticut between fiscal years 2020 to 2021.</p>
                     <p>
                         Feel free to explore the visualization by typing in a location (city or zip), adjusting filters, or just panning and zooming on the map. Most importantly <a href="https://squaredlabs.uconn.edu/">let us know</a> what you think!
                     </p>
