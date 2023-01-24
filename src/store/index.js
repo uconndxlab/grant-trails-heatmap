@@ -60,7 +60,7 @@ export default createStore({
         selected_fiscal_years = year_nums;
       }
       let selected_fund_type = searchOptions[1];
-      let { data, error } = await supabase.rpc("fetchfilteredpurchasestotal", {
+      let { data, error } = await supabase.rpc("fetchfilteredpurchasetotal", {
         selected_fiscal_years,
         selected_fund_type,
       });
