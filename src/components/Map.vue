@@ -76,19 +76,19 @@ export default {
             console.log('Adding markers!')
             for (const grant of grantObj) {
 
-            const el = document.createElement("div");
-            const diam = 20 + 0.8 * Math.pow(grant.total_amount, 1/4);
-            el.className = "marker";
-            el.style.width = `${diam}px`;
-            el.style.height = `${diam}px`;
-            el.addEventListener('click', () => {
-                this.selectedGrant = grant;
-                this.dialog = true;
-            });
-            this.marker = new mapboxgl.Marker(el)
-                .setLngLat(JSON.parse(grant.grants_location).reverse())
-                .addTo(this.map);
-            currentMarkers.push(this.marker);
+                const el = document.createElement("div");
+                const diam = 20 + 0.8 * Math.pow(grant.total_amount, 1/4);
+                el.className = "marker";
+                el.style.width = `${diam}px`;
+                el.style.height = `${diam}px`;
+                el.addEventListener('click', () => {
+                    this.selectedGrant = grant;
+                    this.dialog = true;
+                });
+                this.marker = new mapboxgl.Marker(el)
+                    .setLngLat(JSON.parse(grant.grants_location).reverse()) //originally the coordinates were reversed for some reason, had to reverse them back
+                    .addTo(this.map);
+                currentMarkers.push(this.marker);
             }
         },
 
@@ -126,14 +126,5 @@ export default {
 </script>
 
 <style>
-    /*@import '../assets/index.css';*/
-    .marker {
-        background-color: #0a2a77;
-        background-size: 100%;
-        display: block;
-        border: solid #ffffff;
-        border-radius: 50%;
-        cursor: pointer;
-        padding: 0;
-    }
+    @import '../assets/index.css';
 </style>

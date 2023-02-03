@@ -52,10 +52,11 @@
   }
 
   .marker {
-    background-color: #0a2a77;
+    background-color: rgba(54, 97, 193, .95);
+    opacity: 50%;
     background-size: 100%;
     display: block;
-    border: solid #ffffff;
+    border: none;
     border-radius: 50%;
     cursor: pointer;
     padding: 0;
