@@ -121,6 +121,18 @@
     height: calc(100vh - 155px);
     overflow-y: auto;
   }
+  @media screen and (max-width: 959px)
+  {
+    #result-list, #result-description{
+      height: 35vh;
+      overflow-y: auto;
+    }
+    #expansion-column{
+      height: auto;
+      overflow-y: auto;
+    }
+  }
+
 /*============ navbar =============*/
 
 nav a{
@@ -180,6 +192,10 @@ nav a{
 
   .navbar-brand {
     margin-left:5px;
+  }
+  .v-text-field input {
+    padding-left: 5px;
+    padding-top: 30px;
   }
 
 #uconn-banner .row-container {

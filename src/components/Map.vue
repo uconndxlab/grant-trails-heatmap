@@ -6,7 +6,20 @@
         </template>
         <v-card>
             <v-card-title>
-                {{ titleCase(selectedGrant.grants_city) }}
+                <span>
+                    {{ titleCase(selectedGrant.grants_city) }}
+                </span>
+                <v-spacer>
+                    <span class="text-body-2">
+                        <v-chip class="ma-1" color="blue" variant="outlined" size="xsmall">
+                            {{currentType}}
+                        </v-chip>
+                        <v-chip class="ma-1" color="blue" variant="outlined"
+                        size="xsmall">
+                            {{yearsDisplay(currentYear)}}
+                        </v-chip>
+                    </span> 
+                </v-spacer>
             </v-card-title>
             <v-card-text>
                 <span>0{{ selectedGrant.grants_zip }} CT, US</span><br />
@@ -33,13 +46,15 @@ export default {
         return {
             accessToken: process.env.VUE_APP_MAPBOX_ACCESS_TOKEN,
             dialog: false,
-            selectedGrant: null
+            selectedGrant: null,
         };
     },
     computed: {
         ...mapGetters({
             coordinates: 'coordinates',
-            grants: 'grants'
+            grants: 'grants',
+            currentType: 'currentType',
+            currentYear: 'currentYear',
         })
     },
     watch:{
@@ -119,6 +134,13 @@ export default {
     },
     openDialog() {
           this.dialog = true;
+      },
+      yearsDisplay(years) {
+        let returnString = "";
+        years.forEach(year => {
+            returnString += year + ", ";
+        })
+        return returnString.slice(0, -2);
       }
     }
 }

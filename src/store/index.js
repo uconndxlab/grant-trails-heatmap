@@ -5,6 +5,8 @@ export default createStore({
   state: {
     grants: [],
     condensedPurchases: [],
+    current_type: "All",
+    current_year: "2020",
   },
   getters: {
     grants(state) {
@@ -16,6 +18,12 @@ export default createStore({
     bootstrapped(state) {
       return state.dataHasBeenRetrieved;
     },
+    currentType(state) {
+      return state.current_type;
+    },
+    currentYear(state) {
+      return state.current_year;
+    },
   },
   mutations: {
     setGrants(state, grants) {
@@ -26,6 +34,12 @@ export default createStore({
     },
     setDataHasBeenRetrieved(state, retrievedStatus) {
       state.dataHasBeenRetrieved = retrievedStatus;
+    },
+    setCurrentType(state, current_type) {
+      state.current_type = current_type;
+    },
+    setCurrentYear(state, current_year) {
+      state.current_year = current_year;
     },
   },
   actions: {
@@ -65,7 +79,11 @@ export default createStore({
         selected_fund_type,
       });
       if (error) console.error(error);
-      else commit("setGrants", data);
+      else {
+        commit("setGrants", data);
+        commit("setCurrentType", selected_fund_type);
+        commit("setCurrentYear", selected_fiscal_years);
+      }
       console.log(data);
     },
   },
