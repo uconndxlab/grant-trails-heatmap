@@ -4,6 +4,7 @@
             :items="['All', 'Federal', 'State/CT', 'State(Not CT)', 'Corporate' ]"
             v-model="current_type"
             chips
+            color="blue"
             density="compact"
             variant="underlined"
             @update:modelValue="filterResultsByCurrentState()"
@@ -15,13 +16,21 @@
             v-model="current_year"
             chips
             multiple
+            color="blue"
             density="compact"
             variant="underlined"
             @update:modelValue="filterResultsByCurrentState()"
             label="Fiscal Year" >
         </v-select>
 
-        <v-text-field v-model="searchTerm" label="Search Results" @input="filterResultsBySearchTerm()"></v-text-field>
+        <v-text-field
+            v-model="searchTerm" 
+            color="blue" 
+            label="Filter by Town or Zip"
+            variant="underlined"
+            clearable 
+            @input="filterResultsBySearchTerm()">
+        </v-text-field>
 
         <v-list id="result-list">
             <v-item-group>
@@ -56,7 +65,13 @@ export default ({
         },
         filteredGrants() {
             return this.limitedResults.filter(grant => {
-                return grant.grants_city.toLowerCase().includes(this.searchTerm.toLowerCase())
+                let zip = grant.grants_zip.toString().padStart(5, '0');
+                if (this.searchTerm) {
+                    return (grant.grants_city.toLowerCase().includes(this.searchTerm.toLowerCase()) || zip.includes(this.searchTerm))
+                }
+                else {
+                    return this.limitedResults
+                }
             })
         }
     },
