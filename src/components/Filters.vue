@@ -56,7 +56,8 @@ export default ({
         },
         filteredGrants() {
             return this.limitedResults.filter(grant => {
-                return grant.grants_city.toLowerCase().includes(this.searchTerm.toLowerCase())
+            let zip = grant.grants_zip.toString().padStart(5, '0');
+            return (grant.grants_city.toLowerCase().includes(this.searchTerm.toLowerCase()) || zip.includes(this.searchTerm))
             })
         }
     },
