@@ -12,7 +12,7 @@
         </v-select>
 
         <v-select
-            :items="['2020', '2021']" 
+            :items="['2020', '2021', '2022', '2023']" 
             v-model="current_year"
             chips
             multiple

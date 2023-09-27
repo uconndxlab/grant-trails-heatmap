@@ -90,7 +90,7 @@ export default {
         async addMarkers(grantObj) {
             console.log('Adding markers!')
             for (const grant of grantObj) {
-
+                //console.log(grant);
                 const el = document.createElement("div");
                 const diam = 20 + 0.8 * Math.pow(grant.total_amount, 1/4);
                 el.className = "marker";
