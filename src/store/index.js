@@ -6,7 +6,7 @@ export default createStore({
     grants: [],
     condensedPurchases: [],
     current_type: "All",
-    current_year: "2020",
+    current_year: "2024",
   },
   getters: {
     grants(state) {
@@ -45,7 +45,7 @@ export default createStore({
   actions: {
     async bootstrap({ dispatch, commit }) {
       await dispatch("fetchCondensedPurchases");
-      await dispatch("fetchFilterGrants", [["2020"], "All"]);
+      await dispatch("fetchFilterGrants", [["2024"], "All"]);
       console.log("bootstrapped");
       commit("setDataHasBeenRetrieved", true);
     },
