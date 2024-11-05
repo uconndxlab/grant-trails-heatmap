@@ -77,7 +77,7 @@ export default {
                 this.map = new mapboxgl.Map({
                     container: "mapView",
                     style: "mapbox://styles/mapbox/streets-v11",
-                    center: [-72.7, 41.45],
+                    center: [-72.74, 41.58],
                     zoom: 8.5
                 });
             }

@@ -53,7 +53,7 @@ export default ({
     name: 'FiltersVue',
     data: () => ({
         current_type: "All",
-        current_year: "2020",
+        current_year: "2024",
         searchTerm: ''
     }),
     computed: {
