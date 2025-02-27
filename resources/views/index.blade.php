@@ -167,7 +167,7 @@
                     </script>
 
                     <noscript>
-                        <style>.table.d-none { display: table!important; }</style>
+                        <style>.table.d-none { display: table!important; } #map { display: none!important; }</style>
                     </noscript>
                     
 
