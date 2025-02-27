@@ -44,15 +44,9 @@
                             document.getElementById('toggleView').addEventListener('click', function() {
                                 const map = document.getElementById('map');
                                 const table = document.querySelector('.table');
-                                if (map.style.display === 'none') {
-                                    map.style.display = 'block';
-                                    table.style.display = 'none';
-                                    this.textContent = 'Switch to Table View';
-                                } else {
-                                    map.style.display = 'none';
-                                    table.style.display = 'table';
-                                    this.textContent = 'Switch to Map View';
-                                }
+                                map.classList.toggle('d-none');
+                                table.classList.toggle('d-none');
+                                this.textContent = map.classList.contains('d-none') ? 'Switch to Map View' : 'Switch to Table View';
                             });
                         </script>
                     </div>
@@ -157,7 +151,7 @@
                     </script>
                     
 
-                    <table class="table">
+                    <table class="table d-none">
                         <thead>
                             <tr>
                                 <th>Zip Code</th>
