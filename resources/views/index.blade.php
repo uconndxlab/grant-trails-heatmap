@@ -12,7 +12,7 @@
                                     <label for="year" class="form-label fw-bold">Year</label>
                                     @foreach($years as $year)
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="year_{{ $year }}" name="fiscal_years[]" value="{{ $year }}" @checked(in_array($year, request()->input('fiscal_years', [])))>
+                                            <input class="form-check-input" type="checkbox" id="year_{{ $year }}" name="fiscal_years[]" value="{{ $year }}" @checked(in_array($year, request()->input('fiscal_years', [])) || ($year === 2024 && empty(request()->input('fiscal_years'))))>
                                             <label class="form-check-label" for="year_{{ $year }}">
                                                 {{ $year }}
                                             </label>
@@ -139,6 +139,7 @@
                                 .then(response => response.json())
                                 .then(data => {
                                     updateMarkers(data);
+                                    updateTable(data);
                                     // Update the URL without reloading the page
                                     history.pushState(null, '', `?${queryString}`);
                                 })
@@ -148,6 +149,21 @@
                                     loader.classList.add('invisible');
                                 });
                         });
+
+                        function updateTable(totals) {
+                            let tbody = document.querySelector('.table tbody');
+                            tbody.innerHTML = '';
+                            totals.forEach(total => {
+                                let row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${total.zip}</td>
+                                    <td>${total.name}</td>
+                                    <td>${total.state_abbr}</td>
+                                    <td class="text-end">${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total.total)}</td>
+                                `;
+                                tbody.appendChild(row);
+                            });
+                        }
                     </script>
                     
 
