@@ -1,72 +1,21 @@
 {
-  "name": "grant-trails-heatmap",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "deploy": "sh deploy.sh"
-  },
-  "dependencies": {
-    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
-    "@mapbox/mapbox-sdk": "^0.14.0",
-    "@supabase/supabase-js": "^2.1.1",
-    "core-js": "^3.8.3",
-    "firebase": "^9.14.0",
-    "http-server": "^14.1.1",
-    "mapbox-gl": "^2.11.0",
-    "mapbox-gl-geocoder": "^2.0.1",
-    "vue": "^3.2.13",
-    "vue-router": "^4.0.3",
-    "vuetify": "^3.0.3",
-    "vuex": "^4.0.0",
-    "yarn": "^1.22.19"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.20.5",
-    "@babel/eslint-parser": "^7.12.16",
-    "@types/mapbox-gl": "^2.7.10",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-plugin-vuex": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "dotenv-webpack": "^8.0.1",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "prettier": "^2.8.0",
-    "vue-cli-plugin-vuetify": "~2.5.8"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
     },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
+    "devDependencies": {
+        "autoprefixer": "^10.4.20",
+        "axios": "^1.7.4",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^1.2.0",
+        "postcss": "^8.4.47",
+        "vite": "^6.0.11"
     },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ],
-  "production": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all",
-    "not ie 11",
-    "not chrome < 51",
-    "not safari < 10",
-    "not android < 51"
-  ]
+    "dependencies": {
+        "bootstrap": "^5.3.3",
+        "htmx.org": "^2.0.4",
+        "sass": "^1.85.1"
+    }
 }

@@ -1,0 +1,120 @@
+// Variable Overrides
+$breadcrumb-font-size: 0.875rem;
+$font-size-base: 0.9rem;
+
+
+// Then import Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+@import "banner";
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+.uconn-brand-parent-site-title {
+    font-size: 13px;
+    color: #000;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.uconn-brand-site-title {
+    color: #000;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+
+.marker {
+    background-color: rgba(54, 97, 193, .95);
+    opacity: 50%!important;
+    background-size: 100%;
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+}
+
+#map {
+    top:0px;
+    width:100%;
+    height:calc(100vh - 200px);
+    margin-top: 0%;
+    canvas {
+        filter:grayscale(1);
+    }
+    .mapboxgl-popup-content {
+        font-size: 13px;
+        padding: 20px;
+    }
+    .mapboxgl-popup {
+        max-width: 500px!important;
+    }
+}
+
+.i3-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .i3-footer p {
+    font-family: "area-normal", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    padding: 10px 0px;
+    margin-bottom: 0px;
+  }
+  
+  .i3-footer a {
+    font-family: "rockwell", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    height: min-content;
+  }
+  
+  .i3-footer img {
+    width: 38px;
+    margin: 0px 5px;
+  }
+  
+  .i3-footer-btn {
+    --corner: 10px;
+    /* the size on the corner */
+    --thickness: 2px;
+    /* the thickness of the border */
+    --gap: 6px;
+    /* the gap between the border and image */
+  
+    padding: 8px 12px;
+    outline-offset: calc(-1*var(--thickness));
+    -webkit-mask:
+      conic-gradient(at var(--corner) var(--corner), #0000 75%, #000 0) 0 0/calc(100% - var(--corner)) calc(100% - var(--corner)),
+      linear-gradient(#000 0 0) content-box;
+    transition: .2s;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    height: 20px;
+    align-items: center;
+    width: fit-content;
+    margin: 0px 5px;
+  }
+  
+  .i3-footer-btn:hover {
+    outline-offset: calc(var(--gap)/-1);
+  }
+  
+  /* light footer styles */
+  
+  .i3-footer--light a {
+    color: #0034DA;
+  }
+  
+  .i3-footer--light .i3-footer-btn {
+    outline: var(--thickness) solid #4DB3FF;
+    /* the corner color */
+  }
