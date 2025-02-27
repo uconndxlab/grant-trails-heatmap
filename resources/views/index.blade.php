@@ -165,6 +165,10 @@
                             });
                         }
                     </script>
+
+                    <noscript>
+                        <style>.table.d-none { display: table!important; }</style>
+                    </noscript>
                     
 
                     <table class="table d-none">
