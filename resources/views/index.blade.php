@@ -109,7 +109,7 @@
                                     .setLngLat([total.longitude, total.latitude])
                                     .setPopup(new mapboxgl.Popup().setHTML(`
                                         <div class="fs-5 mb-3">
-                                            ${selectedFiscalYears.map(year => `<span class="badge text-bg-primary">${year}</span>`).join(' ')}
+                                            ${selectedFiscalYears.map(year => `<span class="badge text-bg-primary ms-end">${year}</span>`).join(' ')}
                                             ${selectedFundTypes.map(type => `<span class="badge text-bg-primary">${type}</span>`).join(' ')}
                                         </div>
                                         <span class="fs-4">
