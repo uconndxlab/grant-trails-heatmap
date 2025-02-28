@@ -81,7 +81,7 @@
                     <div id="map"></div>
 
                     <script>
-                        mapboxgl.accessToken = 'pk.eyJ1IjoidWNvbm5keGdyb3VwIiwiYSI6ImNrcTg4dWc5NzBkcWYyd283amtpNjFiZXkifQ.iGpZ5PfDWFWWPkuDeGQ3NQ';
+                        mapboxgl.accessToken = '{{ config('mapbox.access_token') }}';
                         var map = new mapboxgl.Map({
                             container: 'map',
                             style: 'mapbox://styles/mapbox/streets-v11',
@@ -114,7 +114,7 @@
                                         </div>
                                         <span class="fs-4">
                                             <span class="d-block mb-3 fw-bold">${total.name} (${total.zip})</span>
-                                            <span class="d-block">${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total.total)}</span>
+                                            <span class="d-block text-end">${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total.total)}</span>
                                         </span>
                                     `))
                                     .addTo(map);
