@@ -31,14 +31,13 @@ class GrantTrailsController extends Controller
 
         $years = [2024, 2023, 2022, 2021, 2020];
         $fundTypes = collect([
-            'Federal',
-            'State/CT',
-            'State(Not CT)',
             'Corporate',
-            'Non-Profit',
-            'International',
+            'State of CT',
+            'Other State and Local Government',
+            'Federal',
+            'Foreign',
             'College/University',
-            'Local Government'
+            'Non-Profit'
         ]);
 
         // $queries = DB::getQueryLog();
