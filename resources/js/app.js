@@ -1,4 +1,3 @@
-import './bootstrap';
 import 'htmx.org';
 // Import all of Bootstrap's JS
 import * as bootstrap from 'bootstrap';
